@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragments_nav"
+    app:startDestination="@id/loginFragment">
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.createlocation.ui.fragments.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_createLocationFragment"
+            app:destination="@id/createLocationFragment" />
+        <argument
+            android:name="token"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/createLocationFragment"
+        android:name="com.example.createlocation.ui.fragments.CreateLocationFragment"
+        android:label="fragment_create_location"
+        tools:layout="@layout/fragment_create_location" >
+        <action
+            android:id="@+id/action_createLocationFragment_to_editLocationFragment"
+            app:destination="@id/editLocationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editLocationFragment"
+        android:name="com.example.createlocation.ui.fragments.EditLocationFragment"
+        android:label="fragment_edit_location"
+        tools:layout="@layout/fragment_edit_location" />
+</navigation>
