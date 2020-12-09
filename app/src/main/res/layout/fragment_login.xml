@@ -63,7 +63,8 @@
             app:hintTextColor="#767B84"
             android:layout_marginTop="10dp"
             android:layout_margin="30dp"
-            app:boxBackgroundMode="outline">
+            app:boxBackgroundMode="outline"
+            app:passwordToggleEnabled="true">
 
             <EditText
                 android:id="@+id/password"
@@ -71,7 +72,7 @@
                 android:layout_height="wrap_content"
                 android:hint="كلمة المرور"
                 android:background="@drawable/edit_shape"
-                android:inputType="textPersonName"
+                android:inputType="textPassword"
                 tools:layout_editor_absoluteX="-2dp"
                 tools:layout_editor_absoluteY="326dp" />
         </com.google.android.material.textfield.TextInputLayout>

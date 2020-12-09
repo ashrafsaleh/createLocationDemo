@@ -21,6 +21,9 @@ import com.example.createlocation.pojo.LoginRequest;
 import com.example.createlocation.pojo.LoginResponse;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -36,6 +39,7 @@ public class LoginFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_login,container,false);
         view = binding.getRoot();
         binding.enterBtn.setOnClickListener(new View.OnClickListener() {
@@ -64,8 +68,9 @@ public class LoginFragment extends Fragment {
         call.enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
-                if (response.isSuccessful())
+                if (response.isSuccessful()){
                     token = response.body().getToken();
+                }
                 else
                     Toast.makeText(getContext(), "wrong data", Toast.LENGTH_SHORT).show();
             }

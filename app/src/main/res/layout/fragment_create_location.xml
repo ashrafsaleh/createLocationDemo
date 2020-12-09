@@ -73,7 +73,8 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </com.google.android.material.appbar.AppBarLayout>
 
-            <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+            <androidx.cardview.widget.CardView
+                xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -142,6 +143,7 @@
                             android:background="@android:color/transparent">
 
                             <EditText
+                                android:id="@+id/name"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:background="@drawable/edit_shape"
@@ -161,6 +163,7 @@
                             android:hint="سبب الإغلاق او الإزالة">
 
                             <EditText
+                                android:id="@+id/reason"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:ems="10"
@@ -258,7 +261,8 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
 
-            <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+            <androidx.cardview.widget.CardView
+                xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
@@ -327,6 +331,7 @@
                             android:hint="الحي">
 
                             <EditText
+                                android:id="@+id/neighborhood"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:background="@drawable/edit_shape"
@@ -347,6 +352,7 @@
                             android:hint="الشارع">
 
                             <EditText
+                                android:id="@+id/street_name"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:ems="10"
@@ -366,6 +372,7 @@
                             android:hint="رقم المبني">
 
                             <EditText
+                                android:id="@+id/building_number"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:ems="10"
@@ -407,6 +414,7 @@
                             android:hint="الرمزالبريدي">
 
                             <EditText
+                                android:id="@+id/post_code"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:ems="10"
@@ -426,6 +434,7 @@
                             android:hint="وصف العنوان">
 
                             <EditText
+                                android:id="@+id/address"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:ems="10"
@@ -445,6 +454,7 @@
                             android:hint="خط الطول">
 
                             <EditText
+                                android:id="@+id/latitude"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:ems="10"
@@ -464,6 +474,7 @@
                             android:hint="خط العرض">
 
                             <EditText
+                                android:id="@+id/longitude"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:ems="10"
@@ -483,6 +494,7 @@
                             android:hint="الموقع">
 
                             <EditText
+                                android:id="@+id/all_location"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:ems="10"
@@ -492,7 +504,8 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
 
-            <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+            <androidx.cardview.widget.CardView
+                xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -581,6 +594,7 @@
                             android:hint="ساعات العمل">
 
                             <EditText
+                                android:id="@+id/duration_work"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:ems="10"
@@ -600,6 +614,7 @@
                             android:hint="مسئول السلامة">
 
                             <EditText
+                                android:id="@+id/responsible"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:ems="10"
@@ -619,6 +634,7 @@
                             android:hint="جوال مسئول السلامة">
 
                             <EditText
+                                android:id="@+id/responsible_num"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:ems="10"
@@ -638,6 +654,7 @@
                             android:hint="متعهد المصاعد">
 
                             <EditText
+                                android:id="@+id/elevator_responsible"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:ems="10"
@@ -657,6 +674,7 @@
                             android:hint="متعهد السلامة">
 
                             <EditText
+                                android:id="@+id/safety_responsible"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:ems="10"
@@ -676,6 +694,7 @@
                             android:hint="مشغل المبنى">
 
                             <EditText
+                                android:id="@+id/building_worker"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:ems="10"
@@ -695,6 +714,7 @@
                             android:hint="مالك المبنى">
 
                             <EditText
+                                android:id="@+id/building_owner"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:ems="10"
@@ -714,23 +734,12 @@
                             android:hint="اسم الحارس">
 
                             <EditText
+                                android:id="@+id/guard_name"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:ems="10"
                                 android:background="@drawable/edit_shape" />
                         </com.google.android.material.textfield.TextInputLayout>
-
-                        <TextView
-                            android:id="@+id/guard_num"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:text="جوال الحارس"
-                            android:textSize="20sp"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.98"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/editTextTextGuardName" />
 
                         <com.google.android.material.textfield.TextInputLayout
                             android:layout_width="match_parent"
@@ -745,6 +754,7 @@
                             android:hint="جوال الحارس">
 
                             <EditText
+                                android:id="@+id/guard_num"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:ems="10"
@@ -754,7 +764,8 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
 
-            <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+            <androidx.cardview.widget.CardView
+                xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -821,6 +832,7 @@
                             android:hint="رخصة البناء">
 
                             <EditText
+                                android:id="@+id/building_license"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:background="@drawable/edit_shape"
@@ -841,6 +853,7 @@
                             android:hint="رخصة هيئة السياحة">
 
                             <EditText
+                                android:id="@+id/tourist_license"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:ems="10"
@@ -860,6 +873,7 @@
                             android:hint="رقم رخصة الدفاع المدني">
 
                             <EditText
+                                android:id="@+id/license_num"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:ems="10"
@@ -879,6 +893,7 @@
                             android:hint="تصريح إسكان الحجاج">
 
                             <EditText
+                                android:id="@+id/hogag_license"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:ems="10"
@@ -898,6 +913,7 @@
                             android:hint="إشتراك الكهرباء">
 
                             <EditText
+                                android:id="@+id/electricity"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:ems="10"

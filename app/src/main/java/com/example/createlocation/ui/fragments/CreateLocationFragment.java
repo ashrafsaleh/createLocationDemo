@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
@@ -17,6 +18,8 @@ import com.example.createlocation.R;
 import com.example.createlocation.data.ApiClient;
 import com.example.createlocation.databinding.FragmentCreateLocationBinding;
 import com.example.createlocation.databinding.FragmentLoginBinding;
+import com.example.createlocation.pojo.CreateLocationModel;
+import com.example.createlocation.pojo.CreateLocationResponse;
 import com.example.createlocation.pojo.FacilityModel;
 import com.example.createlocation.pojo.GetAllDropDown;
 import com.google.android.material.textfield.TextInputEditText;
@@ -30,6 +33,8 @@ import retrofit2.Response;
 
 
 public class CreateLocationFragment extends Fragment {
+    View view;
+    int facilityId,contractId,catId,typeId,statusId,safId;
     FragmentCreateLocationBinding binding;
     ArrayList<String> facilities = new ArrayList<>();
     ArrayList<String> contractTypes = new ArrayList<>();
@@ -43,7 +48,6 @@ public class CreateLocationFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_create_location, container, false);
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_create_location,container,false);
         token = getArguments().getString("token");
         view = binding.getRoot();
@@ -75,9 +79,57 @@ public class CreateLocationFragment extends Fragment {
                 binding.licenseContainer.setVisibility(View.VISIBLE);
             }
         });
-
         getFacilities();
         getAllDropDown();
+        binding.confirmBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(binding.name.getText().toString().isEmpty()||binding.streetName.getText().toString().isEmpty()||binding.address.getText().toString().isEmpty()
+                ||binding.buildingNumber.getText().toString().isEmpty()||binding.buildingWorker.getText().toString().isEmpty()||binding.buildingOwner.getText().toString().isEmpty()
+                ||binding.licenseNum.getText().toString().isEmpty()||binding.reason.getText().toString().isEmpty()||Integer.getInteger(binding.postCode.getText().toString()) == null
+                ||binding.buildingLicense.getText().toString().isEmpty()||binding.electricity.getText().toString().isEmpty()||binding.guardNum.getText().toString().isEmpty()
+                ||binding.guardName.getText().toString().isEmpty()||binding.hogagLicense.getText().toString().isEmpty()||binding.latitude.getText().toString().isEmpty()
+                ||binding.elevatorResponsible.getText().toString().isEmpty()||binding.longitude.getText().toString().isEmpty()||binding.neighborhood.getText().toString().isEmpty()
+                ||binding.responsibleNum.getText().toString().isEmpty()||binding.responsible.getText().toString().isEmpty()||binding.safetyResponsible.getText().toString().isEmpty()
+                ||binding.durationWork.getText().toString().isEmpty()||binding.touristLicense.getText().toString().isEmpty()){
+                    Toast.makeText(getContext(), "Please fill all fields", Toast.LENGTH_SHORT).show();
+                }
+                CreateLocationModel createLocationModel = new CreateLocationModel();
+                createLocationModel.setName(binding.name.getText().toString());
+                createLocationModel.setStreetName(binding.streetName.getText().toString());
+                createLocationModel.setAddressDescription(binding.address.getText().toString());
+                createLocationModel.setBuildingNo(binding.buildingNumber.getText().toString());
+                createLocationModel.setBuildingOperatorName(binding.buildingWorker.getText().toString());
+                createLocationModel.setBuildingOwnerName(binding.buildingOwner.getText().toString());
+                createLocationModel.setCivilDefenseLicenseNo(binding.licenseNum.getText().toString());
+                createLocationModel.setClosureOrRemovalReasons(binding.reason.getText().toString());
+                createLocationModel.setPostalCode(Integer.getInteger(binding.postCode.getText().toString()));
+                createLocationModel.setConstructionLicenseNo(binding.buildingLicense.getText().toString());
+                createLocationModel.setElectricitySubscription(binding.electricity.getText().toString());
+                createLocationModel.setContractType(contractId);
+                createLocationModel.setFacilityId(facilityId);
+                createLocationModel.setGuardMobile(binding.guardNum.getText().toString());
+                createLocationModel.setGuardName(binding.guardName.getText().toString());
+                createLocationModel.setHajHousingLicense(binding.hogagLicense.getText().toString());
+                createLocationModel.setLastModifiedDate("20/2/2020");
+                createLocationModel.setLatitude(binding.latitude.getText().toString());
+                createLocationModel.setLiftsFacility(binding.elevatorResponsible.getText().toString());
+                createLocationModel.setLocationCategoryId(catId);
+                createLocationModel.setLongitude(binding.longitude.getText().toString());
+                createLocationModel.setNeighborhood(binding.neighborhood.getText().toString());
+                createLocationModel.setRecordStatus(2);
+                createLocationModel.setSafetyOfficerMobile(binding.responsibleNum.getText().toString());
+                createLocationModel.setSafetyOfficerName(binding.responsible.getText().toString());
+                createLocationModel.setSaftyFacility(binding.safetyResponsible.getText().toString());
+                createLocationModel.setSaftyOfficeId(safId);
+                createLocationModel.setWorkingHours(binding.durationWork.getText().toString());
+                createLocationModel.setStatus(statusId);
+                createLocationModel.setType(typeId);
+                createLocationModel.setTourismAuthorityLicenseNo(binding.touristLicense.getText().toString());
+                posData(createLocationModel);
+
+            }
+        });
         return view;
     }
     public void getFacilities(){
@@ -92,7 +144,18 @@ public class CreateLocationFragment extends Fragment {
                     ArrayAdapter adapter = new ArrayAdapter(getContext(), R.layout.support_simple_spinner_dropdown_item,facilities);
                     adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
                     binding.firstSpinner.setAdapter(adapter);
-                    //int idd = response.body().get(binding.firstSpinner.getSelectedItemPosition()).getId();
+                    binding.firstSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                            facilityId = response.body().get(binding.firstSpinner.getSelectedItemPosition()).getId();
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
+
+                        }
+                    });
+
                 }
             }
 
@@ -113,12 +176,34 @@ public class CreateLocationFragment extends Fragment {
                         ArrayAdapter contractAdapter = new ArrayAdapter(getContext(), R.layout.support_simple_spinner_dropdown_item, contractTypes);
                         contractAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
                         binding.contractSpinner.setAdapter(contractAdapter);
+                        binding.contractSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                            @Override
+                            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                contractId = parent.getSelectedItemPosition()+1;
+                            }
+
+                            @Override
+                            public void onNothingSelected(AdapterView<?> parent) {
+
+                            }
+                        });
                     }
                     for(int i = 0;i<response.body().getLocationCategories().size();i++){
                         locationCat.add(response.body().getLocationCategories().get(i).getName());
                         ArrayAdapter catAdapter = new ArrayAdapter(getContext(), R.layout.support_simple_spinner_dropdown_item, locationCat);
                         catAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
                         binding.contractKindSpinner.setAdapter(catAdapter);
+                        binding.contractKindSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                            @Override
+                            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                catId = response.body().getLocationCategories().get(binding.contractSpinner.getSelectedItemPosition()).getId();
+                            }
+
+                            @Override
+                            public void onNothingSelected(AdapterView<?> parent) {
+
+                            }
+                        });
                     }
 
                     for(int i = 0;i<response.body().getLocationTypes().size();i++){
@@ -126,18 +211,51 @@ public class CreateLocationFragment extends Fragment {
                         ArrayAdapter typeAdapter = new ArrayAdapter(getContext(), R.layout.support_simple_spinner_dropdown_item, locationTypes);
                         typeAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
                         binding.trainSpinner.setAdapter(typeAdapter);
+                        binding.trainSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                            @Override
+                            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                typeId = parent.getSelectedItemPosition()+1;
+                            }
+
+                            @Override
+                            public void onNothingSelected(AdapterView<?> parent) {
+
+                            }
+                        });
                     }
                     for(int i = 0;i<response.body().getLocationStatus().size();i++){
                         locationStatus.add(response.body().getLocationStatus().get(i));
                         ArrayAdapter statusAdapter = new ArrayAdapter(getContext(), R.layout.support_simple_spinner_dropdown_item, locationStatus);
                         statusAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
                         binding.signerSpinner.setAdapter(statusAdapter);
+                        binding.signerSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                            @Override
+                            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                statusId = parent.getSelectedItemPosition()+1;
+                            }
+
+                            @Override
+                            public void onNothingSelected(AdapterView<?> parent) {
+
+                            }
+                        });
                     }
                     for(int i = 0;i<response.body().getSaftyOffices().size();i++){
                         safetyOffices.add(response.body().getSaftyOffices().get(i).getName());
                         ArrayAdapter safetyAdapter = new ArrayAdapter(getContext(), R.layout.support_simple_spinner_dropdown_item, safetyOffices);
                         safetyAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
                         binding.safeSpinner.setAdapter(safetyAdapter);
+                        binding.safeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                            @Override
+                            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                safId = response.body().getSaftyOffices().get(binding.safeSpinner.getSelectedItemPosition()).getId();
+                            }
+
+                            @Override
+                            public void onNothingSelected(AdapterView<?> parent) {
+
+                            }
+                        });
                     }
 
                 }
@@ -146,6 +264,23 @@ public class CreateLocationFragment extends Fragment {
             @Override
             public void onFailure(Call<GetAllDropDown> call, Throwable t) {
 
+            }
+        });
+    }
+    public void posData(CreateLocationModel createLocationModel){
+
+        Call<CreateLocationResponse> call = ApiClient.getApiInterface().postData("Bearer "+token,createLocationModel);
+        call.enqueue(new Callback<CreateLocationResponse>() {
+            @Override
+            public void onResponse(Call<CreateLocationResponse> call, Response<CreateLocationResponse> response) {
+                if(response.isSuccessful())
+                Toast.makeText(getContext(), "Data saved successfully", Toast.LENGTH_SHORT).show();
+                else
+                    Toast.makeText(getContext(), "Not saved", Toast.LENGTH_SHORT).show();
+            }
+            @Override
+            public void onFailure(Call<CreateLocationResponse> call, Throwable t) {
+                Toast.makeText(getContext(), "failed", Toast.LENGTH_SHORT).show();
             }
         });
     }
