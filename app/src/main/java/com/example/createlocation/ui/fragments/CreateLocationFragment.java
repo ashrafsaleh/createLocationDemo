@@ -84,7 +84,7 @@ public class CreateLocationFragment extends Fragment {
         binding.confirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(binding.name.getText().toString().isEmpty()||binding.streetName.getText().toString().isEmpty()||binding.address.getText().toString().isEmpty()
+              /*  if(binding.name.getText().toString().isEmpty()||binding.streetName.getText().toString().isEmpty()||binding.address.getText().toString().isEmpty()
                 ||binding.buildingNumber.getText().toString().isEmpty()||binding.buildingWorker.getText().toString().isEmpty()||binding.buildingOwner.getText().toString().isEmpty()
                 ||binding.licenseNum.getText().toString().isEmpty()||binding.reason.getText().toString().isEmpty()||Integer.getInteger(binding.postCode.getText().toString()) == null
                 ||binding.buildingLicense.getText().toString().isEmpty()||binding.electricity.getText().toString().isEmpty()||binding.guardNum.getText().toString().isEmpty()
@@ -93,7 +93,7 @@ public class CreateLocationFragment extends Fragment {
                 ||binding.responsibleNum.getText().toString().isEmpty()||binding.responsible.getText().toString().isEmpty()||binding.safetyResponsible.getText().toString().isEmpty()
                 ||binding.durationWork.getText().toString().isEmpty()||binding.touristLicense.getText().toString().isEmpty()){
                     Toast.makeText(getContext(), "Please fill all fields", Toast.LENGTH_SHORT).show();
-                }
+                }*/
                 CreateLocationModel createLocationModel = new CreateLocationModel();
                 createLocationModel.setName(binding.name.getText().toString());
                 createLocationModel.setStreetName(binding.streetName.getText().toString());
@@ -269,7 +269,7 @@ public class CreateLocationFragment extends Fragment {
     }
     public void posData(CreateLocationModel createLocationModel){
 
-        Call<CreateLocationResponse> call = ApiClient.getApiInterface().postData("Bearer "+token,createLocationModel);
+        Call<CreateLocationResponse> call = ApiClient.getApiInterface().postData(createLocationModel);
         call.enqueue(new Callback<CreateLocationResponse>() {
             @Override
             public void onResponse(Call<CreateLocationResponse> call, Response<CreateLocationResponse> response) {

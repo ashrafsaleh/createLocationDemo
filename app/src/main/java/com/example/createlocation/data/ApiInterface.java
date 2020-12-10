@@ -23,5 +23,5 @@ public interface ApiInterface {
     @GET("api/Facilities/GetAllFacilitiesDropDown")
     public Call <GetAllDropDown> getDropDown();
     @POST("api/Location")
-    public Call<CreateLocationResponse> postData(@Header("Authorization") String token, @Body CreateLocationModel createLoctionModel);
+    public Call<CreateLocationResponse> postData(@Body CreateLocationModel createLoctionModel);
 }
