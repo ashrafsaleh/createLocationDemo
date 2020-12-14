@@ -21,7 +21,7 @@ public class CreateLocationModel {
     private String neighborhood;
     @SerializedName("postalCode")
     @Expose
-    private Integer postalCode;
+    private int postalCode;
     @SerializedName("longitude")
     @Expose
     private String longitude;
@@ -138,11 +138,11 @@ public class CreateLocationModel {
         this.neighborhood = neighborhood;
     }
 
-    public Integer getPostalCode() {
+    public int getPostalCode() {
         return postalCode;
     }
 
-    public void setPostalCode(Integer postalCode) {
+    public void setPostalCode(int postalCode) {
         this.postalCode = postalCode;
     }
 

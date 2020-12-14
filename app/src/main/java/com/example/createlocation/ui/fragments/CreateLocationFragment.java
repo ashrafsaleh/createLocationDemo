@@ -1,5 +1,6 @@
 package com.example.createlocation.ui.fragments;
 
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
 import androidx.databinding.DataBindingUtil;
@@ -50,6 +51,7 @@ public class CreateLocationFragment extends Fragment {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_create_location,container,false);
         token = getArguments().getString("token");
+        Toast.makeText(getContext(), token, Toast.LENGTH_SHORT).show();
         view = binding.getRoot();
         binding.arrowDown.setImageResource(R.drawable.ic_baseline_expand_more_24);
         binding.arrowDown.setOnClickListener(new View.OnClickListener() {
@@ -99,33 +101,33 @@ public class CreateLocationFragment extends Fragment {
                 createLocationModel.setStreetName(binding.streetName.getText().toString());
                 createLocationModel.setAddressDescription(binding.address.getText().toString());
                 createLocationModel.setBuildingNo(binding.buildingNumber.getText().toString());
+                createLocationModel.setNeighborhood(binding.neighborhood.getText().toString());
+                createLocationModel.setPostalCode(Integer.parseInt(binding.postCode.getText().toString()));
+                createLocationModel.setLongitude(binding.longitude.getText().toString());
+                createLocationModel.setLatitude(binding.latitude.getText().toString());
+                createLocationModel.setSaftyOfficeId(safId);
+                createLocationModel.setLocationCategoryId(catId);
+                createLocationModel.setType(typeId);
+                createLocationModel.setConstructionLicenseNo(binding.buildingLicense.getText().toString());
+                createLocationModel.setTourismAuthorityLicenseNo(binding.touristLicense.getText().toString());
+                createLocationModel.setWorkingHours(binding.durationWork.getText().toString());
+                createLocationModel.setGuardName(binding.guardName.getText().toString());
+                createLocationModel.setGuardMobile(binding.guardNum.getText().toString());
+                createLocationModel.setStatus(statusId);
+                createLocationModel.setRecordStatus(2);
+                createLocationModel.setLastModifiedDate("2023-06-10T00:00:00");
+                createLocationModel.setClosureOrRemovalReasons(binding.reason.getText().toString());
+                createLocationModel.setSafetyOfficerName(binding.responsible.getText().toString());
+                createLocationModel.setSafetyOfficerMobile(binding.responsibleNum.getText().toString());
                 createLocationModel.setBuildingOperatorName(binding.buildingWorker.getText().toString());
                 createLocationModel.setBuildingOwnerName(binding.buildingOwner.getText().toString());
                 createLocationModel.setCivilDefenseLicenseNo(binding.licenseNum.getText().toString());
-                createLocationModel.setClosureOrRemovalReasons(binding.reason.getText().toString());
-                createLocationModel.setPostalCode(Integer.getInteger(binding.postCode.getText().toString()));
-                createLocationModel.setConstructionLicenseNo(binding.buildingLicense.getText().toString());
-                createLocationModel.setElectricitySubscription(binding.electricity.getText().toString());
-                createLocationModel.setContractType(contractId);
-                createLocationModel.setFacilityId(facilityId);
-                createLocationModel.setGuardMobile(binding.guardNum.getText().toString());
-                createLocationModel.setGuardName(binding.guardName.getText().toString());
-                createLocationModel.setHajHousingLicense(binding.hogagLicense.getText().toString());
-                createLocationModel.setLastModifiedDate("20/2/2020");
-                createLocationModel.setLatitude(binding.latitude.getText().toString());
                 createLocationModel.setLiftsFacility(binding.elevatorResponsible.getText().toString());
-                createLocationModel.setLocationCategoryId(catId);
-                createLocationModel.setLongitude(binding.longitude.getText().toString());
-                createLocationModel.setNeighborhood(binding.neighborhood.getText().toString());
-                createLocationModel.setRecordStatus(2);
-                createLocationModel.setSafetyOfficerMobile(binding.responsibleNum.getText().toString());
-                createLocationModel.setSafetyOfficerName(binding.responsible.getText().toString());
                 createLocationModel.setSaftyFacility(binding.safetyResponsible.getText().toString());
-                createLocationModel.setSaftyOfficeId(safId);
-                createLocationModel.setWorkingHours(binding.durationWork.getText().toString());
-                createLocationModel.setStatus(statusId);
-                createLocationModel.setType(typeId);
-                createLocationModel.setTourismAuthorityLicenseNo(binding.touristLicense.getText().toString());
+                createLocationModel.setContractType(contractId);
+                createLocationModel.setHajHousingLicense(binding.hogagLicense.getText().toString());
+                createLocationModel.setElectricitySubscription(binding.electricity.getText().toString());
+                createLocationModel.setFacilityId(facilityId);
                 posData(createLocationModel);
 
             }

@@ -53,9 +53,7 @@ public class LoginFragment extends Fragment {
                 else
                 {
                     login();
-                Bundle bundle = new Bundle();
-                bundle.putString("token", token);
-                Navigation.findNavController(v).navigate(R.id.action_loginFragment_to_createLocationFragment,bundle);
+
                 }
             }
         });
@@ -70,6 +68,9 @@ public class LoginFragment extends Fragment {
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 if (response.isSuccessful()){
                     token = response.body().getToken();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("token", token);
+                    Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_detailsFragment,bundle);
                 }
                 else
                     Toast.makeText(getContext(), "wrong data", Toast.LENGTH_SHORT).show();

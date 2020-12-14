@@ -10,12 +10,12 @@
         android:name="com.example.createlocation.ui.fragments.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
-        <action
-            android:id="@+id/action_loginFragment_to_createLocationFragment"
-            app:destination="@id/createLocationFragment" />
         <argument
             android:name="token"
             app:argType="string" />
+        <action
+            android:id="@+id/action_loginFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/createLocationFragment"
@@ -31,4 +31,12 @@
         android:name="com.example.createlocation.ui.fragments.EditLocationFragment"
         android:label="fragment_edit_location"
         tools:layout="@layout/fragment_edit_location" />
+    <fragment
+        android:id="@+id/detailsFragment"
+        android:name="com.example.createlocation.ui.fragments.DetailsFragment"
+        android:label="DetailsFragment" >
+        <action
+            android:id="@+id/action_detailsFragment_to_createLocationFragment"
+            app:destination="@id/createLocationFragment" />
+    </fragment>
 </navigation>

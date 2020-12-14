@@ -13,6 +13,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 
 public interface ApiInterface {
@@ -22,6 +23,7 @@ public interface ApiInterface {
     public Call <List<FacilityModel>> getFacilities();
     @GET("api/Facilities/GetAllFacilitiesDropDown")
     public Call <GetAllDropDown> getDropDown();
+    @Headers("Content-Type: application/json")
     @POST("api/Location")
     public Call<CreateLocationResponse> postData(@Body CreateLocationModel createLoctionModel);
 }

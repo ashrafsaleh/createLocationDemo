@@ -30,7 +30,7 @@ public class ApiClient {
             @Override
             public Response intercept(Chain chain) throws IOException {
                 Request request = chain.request().newBuilder()
-                        .addHeader("Authorization", "Bearer "+"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJhZTg2OGY4Ny01OWExLTQyYzUtOTc4Yy01MjA3ZGIzZDI0ZjgiLCJ1bmlxdWVfbmFtZSI6ItmF2K_ZitixIiwibmJmIjoxNjA3NTkyODI3LCJleHAiOjE2MDc2NzkyMjcsImlhdCI6MTYwNzU5MjgyN30.D-rOgLnQQVy0G3nMwzgkoKjefAbhbi3sYU1doffb7TA").build();
+                        .addHeader("Authorization", "Bearer "+"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJhZTg2OGY4Ny01OWExLTQyYzUtOTc4Yy01MjA3ZGIzZDI0ZjgiLCJ1bmlxdWVfbmFtZSI6ItmF2K_ZitixIiwibmJmIjoxNjA3OTQwMDgwLCJleHAiOjE2MDgwMjY0ODAsImlhdCI6MTYwNzk0MDA4MH0.RlJZHRWDsVV55gG9nv5uu7yF3TjFC5PSPd2NCm7HdH0").build();
                 return chain.proceed(request);
             }
         }).addInterceptor(httpLoggingInterceptor);
