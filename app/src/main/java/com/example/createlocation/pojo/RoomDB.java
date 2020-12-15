@@ -5,6 +5,9 @@ import android.content.Context;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+
+import com.example.createlocation.data.Dao;
+
 @Database(entities = {CreateLocationDB.class},version = 1)
 public abstract class RoomDB  extends RoomDatabase {
     public static RoomDB db;
@@ -19,5 +22,5 @@ public abstract class RoomDB  extends RoomDatabase {
         }
         return db;
     }
-
+    public abstract Dao dao();
 }
