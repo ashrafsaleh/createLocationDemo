@@ -10,8 +10,9 @@ import com.example.createlocation.data.Dao;
 
 @Database(entities = {CreateLocationDB.class},version = 1)
 public abstract class RoomDB  extends RoomDatabase {
+    public abstract Dao dao();
     public static RoomDB db;
-    public static String DATABASE_NAME = "database";
+    public static String DATABASE_NAME = "observer_database";
 
     public synchronized static RoomDB getInstance(Context context){
         if(db == null){
@@ -22,5 +23,5 @@ public abstract class RoomDB  extends RoomDatabase {
         }
         return db;
     }
-    public abstract Dao dao();
+
 }

@@ -15,6 +15,9 @@ import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface ApiInterface {
     @POST("api/Users/Login")
@@ -26,4 +29,6 @@ public interface ApiInterface {
     @Headers("Content-Type: application/json")
     @POST("api/Location")
     public Call<CreateLocationResponse> postData(@Body CreateLocationModel createLoctionModel);
+    @PUT("api/Location")
+    public Call<Boolean> getRequest(@Path("id") int id,@Body CreateLocationResponse createLocationResponse);
 }

@@ -16,13 +16,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Header;
 
 public class ApiClient {
-    String token;
+
     private static final String BASE_URL = "http://95.211.149.197:1050/";
     private ApiInterface apiInterface;
     private ApiClient INSTANCE;
     public LoginRequest loginRequest;
 
-    private static Retrofit getRetrofit() {
+    private static Retrofit getRetrofit(String token) {
         HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
         httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient.Builder okHttpClient = new OkHttpClient.Builder();
@@ -30,7 +30,7 @@ public class ApiClient {
             @Override
             public Response intercept(Chain chain) throws IOException {
                 Request request = chain.request().newBuilder()
-                        .addHeader("Authorization", "Bearer "+"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJhZTg2OGY4Ny01OWExLTQyYzUtOTc4Yy01MjA3ZGIzZDI0ZjgiLCJ1bmlxdWVfbmFtZSI6ItmF2K_ZitixIiwibmJmIjoxNjA4MDMxMTU3LCJleHAiOjE2MDgxMTc1NTcsImlhdCI6MTYwODAzMTE1N30.WXIBQNzgGUTM8ghD-oUtxgCo6ID6z0ZiIdXzBfcjMsk").build();
+                        .addHeader("Authorization", "Bearer "+token).build();
                 return chain.proceed(request);
             }
         }).addInterceptor(httpLoggingInterceptor);
@@ -42,8 +42,8 @@ public class ApiClient {
         return retrofit1;
     }
 
-    public static ApiInterface getApiInterface() {
-        ApiInterface anInterface = getRetrofit().create(ApiInterface.class);
+    public static ApiInterface getApiInterface(String token) {
+        ApiInterface anInterface = getRetrofit(token).create(ApiInterface.class);
         return anInterface;
     }
 }

@@ -1,10 +1,15 @@
 package com.example.createlocation.ui.fragments;
 
+import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.net.wifi.WifiInfo;
 import android.os.Bundle;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,6 +53,8 @@ public class CreateLocationFragment extends Fragment {
     ArrayList<Integer> facId = new ArrayList<>();
     String token;
     RoomDB roomDB;
+    int editID;
+    Bundle bundle;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -104,84 +111,86 @@ public class CreateLocationFragment extends Fragment {
                     Toast.makeText(getContext(), "Please fill all fields", Toast.LENGTH_SHORT).show();
                 }
                 else{
-                CreateLocationModel createLocationModel = new CreateLocationModel();
-                createLocationModel.setName(binding.name.getText().toString());
-                createLocationModel.setStreetName(binding.streetName.getText().toString());
-                createLocationModel.setAddressDescription(binding.address.getText().toString());
-                createLocationModel.setBuildingNo(binding.buildingNumber.getText().toString());
-                createLocationModel.setNeighborhood(binding.neighborhood.getText().toString());
-                createLocationModel.setPostalCode(Integer.parseInt(binding.postCode.getText().toString()));
-                createLocationModel.setLongitude(binding.longitude.getText().toString());
-                createLocationModel.setLatitude(binding.latitude.getText().toString());
-                createLocationModel.setSaftyOfficeId(safId);
-                createLocationModel.setLocationCategoryId(catId);
-                createLocationModel.setType(typeId);
-                createLocationModel.setConstructionLicenseNo(binding.buildingLicense.getText().toString());
-                createLocationModel.setTourismAuthorityLicenseNo(binding.touristLicense.getText().toString());
-                createLocationModel.setWorkingHours(binding.durationWork.getText().toString());
-                createLocationModel.setGuardName(binding.guardName.getText().toString());
-                createLocationModel.setGuardMobile(binding.guardNum.getText().toString());
-                createLocationModel.setStatus(statusId);
-                createLocationModel.setRecordStatus(2);
-                createLocationModel.setLastModifiedDate("2023-06-10T00:00:00");
-                createLocationModel.setClosureOrRemovalReasons(binding.reason.getText().toString());
-                createLocationModel.setSafetyOfficerName(binding.responsible.getText().toString());
-                createLocationModel.setSafetyOfficerMobile(binding.responsibleNum.getText().toString());
-                createLocationModel.setBuildingOperatorName(binding.buildingWorker.getText().toString());
-                createLocationModel.setBuildingOwnerName(binding.buildingOwner.getText().toString());
-                createLocationModel.setCivilDefenseLicenseNo(binding.licenseNum.getText().toString());
-                createLocationModel.setLiftsFacility(binding.elevatorResponsible.getText().toString());
-                createLocationModel.setSaftyFacility(binding.safetyResponsible.getText().toString());
-                createLocationModel.setContractType(contractId);
-                createLocationModel.setHajHousingLicense(binding.hogagLicense.getText().toString());
-                createLocationModel.setElectricitySubscription(binding.electricity.getText().toString());
-                createLocationModel.setFacilityId(facilityId);
-                posData(createLocationModel);
-                /*CreateLocationDB createLocationModel = new CreateLocationDB();
-                createLocationModel.setName(binding.name.getText().toString());
-                createLocationModel.setStreetName(binding.streetName.getText().toString());
-                createLocationModel.setAddressDescription(binding.address.getText().toString());
-                createLocationModel.setBuildingNo(binding.buildingNumber.getText().toString());
-                createLocationModel.setNeighborhood(binding.neighborhood.getText().toString());
-                createLocationModel.setPostalCode(Integer.parseInt(binding.postCode.getText().toString()));
-                createLocationModel.setLongitude(binding.longitude.getText().toString());
-                createLocationModel.setLatitude(binding.latitude.getText().toString());
-                createLocationModel.setSaftyOfficeId(safId);
-                createLocationModel.setLocationCategoryId(catId);
-                createLocationModel.setType(typeId);
-                createLocationModel.setConstructionLicenseNo(binding.buildingLicense.getText().toString());
-                createLocationModel.setTourismAuthorityLicenseNo(binding.touristLicense.getText().toString());
-                createLocationModel.setWorkingHours(binding.durationWork.getText().toString());
-                createLocationModel.setGuardName(binding.guardName.getText().toString());
-                createLocationModel.setGuardMobile(binding.guardNum.getText().toString());
-                createLocationModel.setStatus(statusId);
-                createLocationModel.setRecordStatus(2);
-                createLocationModel.setLastModifiedDate("2023-06-10T00:00:00");
-                createLocationModel.setClosureOrRemovalReasons(binding.reason.getText().toString());
-                createLocationModel.setSafetyOfficerName(binding.responsible.getText().toString());
-                createLocationModel.setSafetyOfficerMobile(binding.responsibleNum.getText().toString());
-                createLocationModel.setBuildingOperatorName(binding.buildingWorker.getText().toString());
-                createLocationModel.setBuildingOwnerName(binding.buildingOwner.getText().toString());
-                createLocationModel.setCivilDefenseLicenseNo(binding.licenseNum.getText().toString());
-                createLocationModel.setLiftsFacility(binding.elevatorResponsible.getText().toString());
-                createLocationModel.setSaftyFacility(binding.safetyResponsible.getText().toString());
-                createLocationModel.setContractType(contractId);
-                createLocationModel.setHajHousingLicense(binding.hogagLicense.getText().toString());
-                createLocationModel.setElectricitySubscription(binding.electricity.getText().toString());
-                createLocationModel.setFacilityId(facilityId);
-                long result = roomDB.dao().insertData(createLocationModel);
-                if(result>0)
-                Toast.makeText(getContext(), "Data inserted", Toast.LENGTH_SHORT).show();
-                else
-                    Toast.makeText(getContext(), "Data not inserted", Toast.LENGTH_SHORT).show();*/
+                    if (!isConnected()){
+                        Toast.makeText(getContext(), "you are offline your data will be saved until to be connected", Toast.LENGTH_SHORT).show();
+                        CreateLocationDB createLocationModel = new CreateLocationDB();
+                        createLocationModel.setName(binding.name.getText().toString());
+                        createLocationModel.setStreetName(binding.streetName.getText().toString());
+                        createLocationModel.setAddressDescription(binding.address.getText().toString());
+                        createLocationModel.setBuildingNo(binding.buildingNumber.getText().toString());
+                        createLocationModel.setNeighborhood(binding.neighborhood.getText().toString());
+                        createLocationModel.setPostalCode(Integer.parseInt(binding.postCode.getText().toString()));
+                        createLocationModel.setLongitude(binding.longitude.getText().toString());
+                        createLocationModel.setLatitude(binding.latitude.getText().toString());
+                        createLocationModel.setSaftyOfficeId(safId);
+                        createLocationModel.setLocationCategoryId(catId);
+                        createLocationModel.setType(typeId);
+                        createLocationModel.setConstructionLicenseNo(binding.buildingLicense.getText().toString());
+                        createLocationModel.setTourismAuthorityLicenseNo(binding.touristLicense.getText().toString());
+                        createLocationModel.setWorkingHours(binding.durationWork.getText().toString());
+                        createLocationModel.setGuardName(binding.guardName.getText().toString());
+                        createLocationModel.setGuardMobile(binding.guardNum.getText().toString());
+                        createLocationModel.setStatus(statusId);
+                        createLocationModel.setRecordStatus(2);
+                        createLocationModel.setLastModifiedDate("2023-06-10T00:00:00");
+                        createLocationModel.setClosureOrRemovalReasons(binding.reason.getText().toString());
+                        createLocationModel.setSafetyOfficerName(binding.responsible.getText().toString());
+                        createLocationModel.setSafetyOfficerMobile(binding.responsibleNum.getText().toString());
+                        createLocationModel.setBuildingOperatorName(binding.buildingWorker.getText().toString());
+                        createLocationModel.setBuildingOwnerName(binding.buildingOwner.getText().toString());
+                        createLocationModel.setCivilDefenseLicenseNo(binding.licenseNum.getText().toString());
+                        createLocationModel.setLiftsFacility(binding.elevatorResponsible.getText().toString());
+                        createLocationModel.setSaftyFacility(binding.safetyResponsible.getText().toString());
+                        createLocationModel.setContractType(contractId);
+                        createLocationModel.setHajHousingLicense(binding.hogagLicense.getText().toString());
+                        createLocationModel.setElectricitySubscription(binding.electricity.getText().toString());
+                        createLocationModel.setFacilityId(facilityId);
+                        roomDB.dao().insertData(createLocationModel);
+                    }
+                    else {
+                        CreateLocationModel createLocationModel = new CreateLocationModel();
+                        createLocationModel.setName(binding.name.getText().toString());
+                        createLocationModel.setStreetName(binding.streetName.getText().toString());
+                        createLocationModel.setAddressDescription(binding.address.getText().toString());
+                        createLocationModel.setBuildingNo(binding.buildingNumber.getText().toString());
+                        createLocationModel.setNeighborhood(binding.neighborhood.getText().toString());
+                        createLocationModel.setPostalCode(Integer.parseInt(binding.postCode.getText().toString()));
+                        createLocationModel.setLongitude(binding.longitude.getText().toString());
+                        createLocationModel.setLatitude(binding.latitude.getText().toString());
+                        createLocationModel.setSaftyOfficeId(safId);
+                        createLocationModel.setLocationCategoryId(catId);
+                        createLocationModel.setType(typeId);
+                        createLocationModel.setConstructionLicenseNo(binding.buildingLicense.getText().toString());
+                        createLocationModel.setTourismAuthorityLicenseNo(binding.touristLicense.getText().toString());
+                        createLocationModel.setWorkingHours(binding.durationWork.getText().toString());
+                        createLocationModel.setGuardName(binding.guardName.getText().toString());
+                        createLocationModel.setGuardMobile(binding.guardNum.getText().toString());
+                        createLocationModel.setStatus(statusId);
+                        createLocationModel.setRecordStatus(2);
+                        createLocationModel.setLastModifiedDate("2023-06-10T00:00:00");
+                        createLocationModel.setClosureOrRemovalReasons(binding.reason.getText().toString());
+                        createLocationModel.setSafetyOfficerName(binding.responsible.getText().toString());
+                        createLocationModel.setSafetyOfficerMobile(binding.responsibleNum.getText().toString());
+                        createLocationModel.setBuildingOperatorName(binding.buildingWorker.getText().toString());
+                        createLocationModel.setBuildingOwnerName(binding.buildingOwner.getText().toString());
+                        createLocationModel.setCivilDefenseLicenseNo(binding.licenseNum.getText().toString());
+                        createLocationModel.setLiftsFacility(binding.elevatorResponsible.getText().toString());
+                        createLocationModel.setSaftyFacility(binding.safetyResponsible.getText().toString());
+                        createLocationModel.setContractType(contractId);
+                        createLocationModel.setHajHousingLicense(binding.hogagLicense.getText().toString());
+                        createLocationModel.setElectricitySubscription(binding.electricity.getText().toString());
+                        createLocationModel.setFacilityId(facilityId);
+                        posData(createLocationModel);
+                    }
                 }
 
             }
         });
+
         return view;
     }
     public void getFacilities(){
-        Call<List<FacilityModel>> call = ApiClient.getApiInterface().getFacilities();
+        Call<List<FacilityModel>> call = ApiClient.getApiInterface(token).getFacilities();
         call.enqueue(new Callback<List<FacilityModel>>() {
             @Override
             public void onResponse(Call<List<FacilityModel>> call, Response<List<FacilityModel>> response) {
@@ -214,7 +223,7 @@ public class CreateLocationFragment extends Fragment {
         });
     }
     public void getAllDropDown(){
-        Call <GetAllDropDown> call = ApiClient.getApiInterface().getDropDown();
+        Call <GetAllDropDown> call = ApiClient.getApiInterface(token).getDropDown();
         call.enqueue(new Callback<GetAllDropDown>() {
             @Override
             public void onResponse(Call<GetAllDropDown> call, Response<GetAllDropDown> response) {
@@ -317,12 +326,49 @@ public class CreateLocationFragment extends Fragment {
     }
     public void posData(CreateLocationModel createLocationModel){
 
-        Call<CreateLocationResponse> call = ApiClient.getApiInterface().postData(createLocationModel);
+        Call<CreateLocationResponse> call = ApiClient.getApiInterface(token).postData(createLocationModel);
         call.enqueue(new Callback<CreateLocationResponse>() {
             @Override
             public void onResponse(Call<CreateLocationResponse> call, Response<CreateLocationResponse> response) {
-                if(response.isSuccessful())
-                Toast.makeText(getContext(), "Data saved successfully", Toast.LENGTH_SHORT).show();
+                if(response.isSuccessful()) {
+                    Toast.makeText(getContext(), "Data saved successfully", Toast.LENGTH_SHORT).show();
+                   editID = response.body().getResult();
+                    bundle = new Bundle();
+                    bundle.putString("id", String.valueOf(editID));
+                    bundle.putString("name",response.body().getLoc().getName());
+                    bundle.putString("streetName",response.body().getLoc().getStreetName());
+                    bundle.putString("setAddress",response.body().getLoc().getAddressDescription());
+                    bundle.putString("buildingNum",response.body().getLoc().getBuildingNo());
+                    bundle.putString("neighborhood",response.body().getLoc().getNeighborhood());
+                    bundle.putString("postCode",String.valueOf(response.body().getLoc().getPostalCode()));
+                    bundle.putString("longitude",response.body().getLoc().getLongitude());
+                    bundle.putString("latitude",response.body().getLoc().getLatitude());
+                    bundle.putString("safetyOffice",String.valueOf(safId));
+                    bundle.putString("locationCat",String.valueOf(catId));
+                    bundle.putString("type",String.valueOf(typeId));
+                    bundle.putString("buildingLice",response.body().getLoc().getConstructionLicenseNo());
+                    bundle.putString("touristLice",response.body().getLoc().getTourismAuthorityLicenseNo());
+                    bundle.putString("duration",response.body().getLoc().getWorkingHours());
+                    bundle.putString("guardName",response.body().getLoc().getGuardName());
+                    bundle.putString("guardNum",response.body().getLoc().getGuardMobile());
+                    bundle.putString("status",String.valueOf(statusId));
+                    bundle.putString("reason",response.body().getLoc().getClosureOrRemovalReasons());
+                    bundle.putString("officerName",response.body().getLoc().getSafetyOfficerName());
+                    bundle.putString("officerNum",response.body().getLoc().getSafetyOfficerMobile());
+                    bundle.putString("operator",response.body().getLoc().getBuildingOperatorName());
+                    bundle.putString("owner",response.body().getLoc().getBuildingOwnerName());
+                    bundle.putString("defenseLice",response.body().getLoc().getCivilDefenseLicenseNo());
+                    bundle.putString("lifts",response.body().getLoc().getLiftsFacility());
+                    bundle.putString("safetyFacility",response.body().getLoc().getSaftyFacility());
+                    bundle.putString("contractID",String.valueOf(contractId));
+                    bundle.putString("hojaj",response.body().getLoc().getHajHousingLicense());
+                    bundle.putString("electricity",response.body().getLoc().getElectricitySubscription());
+                    bundle.putString("facilityID",String.valueOf(facilityId));
+                    bundle.putStringArrayList("facilities",facilities);
+
+                    Navigation.findNavController(view).navigate(R.id.action_createLocationFragment_to_editLocationFragment,bundle);
+
+                }
                 else
                     Toast.makeText(getContext(), "Not saved", Toast.LENGTH_SHORT).show();
             }
@@ -331,5 +377,15 @@ public class CreateLocationFragment extends Fragment {
                 Toast.makeText(getContext(), "failed", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+    private boolean isConnected (){
+        ConnectivityManager connectivityManager = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo wifiInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        NetworkInfo mobileInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+        if((wifiInfo !=null && wifiInfo.isConnected()) || (mobileInfo !=null && mobileInfo.isConnected()))
+            return true;
+        else
+            return false;
+
     }
 }

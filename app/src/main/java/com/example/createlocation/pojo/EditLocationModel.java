@@ -1,89 +1,111 @@
 package com.example.createlocation.pojo;
 
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-@Entity(tableName = "create_location")
-public class CreateLocationDB {
-    @PrimaryKey(autoGenerate = true)
-    private int id;
+
+public class EditLocationModel {
+    @SerializedName("id")
+    @Expose
+    private Integer id;
+    @SerializedName("name")
+    @Expose
     private String name;
+    @SerializedName("streetName")
+    @Expose
     private String streetName;
+    @SerializedName("addressDescription")
+    @Expose
     private String addressDescription;
+    @SerializedName("buildingNo")
+    @Expose
     private String buildingNo;
+    @SerializedName("neighborhood")
+    @Expose
     private String neighborhood;
+    @SerializedName("postalCode")
+    @Expose
     private Integer postalCode;
+    @SerializedName("longitude")
+    @Expose
     private String longitude;
+    @SerializedName("latitude")
+    @Expose
     private String latitude;
+    @SerializedName("saftyOfficeId")
+    @Expose
     private Integer saftyOfficeId;
+    @SerializedName("locationCategoryId")
+    @Expose
     private Integer locationCategoryId;
+    @SerializedName("type")
+    @Expose
     private Integer type;
+    @SerializedName("constructionLicenseNo")
+    @Expose
     private String constructionLicenseNo;
+    @SerializedName("tourismAuthorityLicenseNo")
+    @Expose
     private String tourismAuthorityLicenseNo;
+    @SerializedName("workingHours")
+    @Expose
     private String workingHours;
+    @SerializedName("guardName")
+    @Expose
     private String guardName;
+    @SerializedName("guardMobile")
+    @Expose
     private String guardMobile;
+    @SerializedName("status")
+    @Expose
     private Integer status;
+    @SerializedName("recordStatus")
+    @Expose
     private Integer recordStatus;
+    @SerializedName("lastModifiedDate")
+    @Expose
     private String lastModifiedDate;
+    @SerializedName("closureOrRemovalReasons")
+    @Expose
     private String closureOrRemovalReasons;
+    @SerializedName("safetyOfficerName")
+    @Expose
     private String safetyOfficerName;
+    @SerializedName("safetyOfficerMobile")
+    @Expose
     private String safetyOfficerMobile;
+    @SerializedName("buildingOperatorName")
+    @Expose
     private String buildingOperatorName;
+    @SerializedName("buildingOwnerName")
+    @Expose
     private String buildingOwnerName;
+    @SerializedName("civilDefenseLicenseNo")
+    @Expose
     private String civilDefenseLicenseNo;
+    @SerializedName("liftsFacility")
+    @Expose
     private String liftsFacility;
+    @SerializedName("saftyFacility")
+    @Expose
     private String saftyFacility;
+    @SerializedName("contractType")
+    @Expose
     private Integer contractType;
+    @SerializedName("hajHousingLicense")
+    @Expose
     private String hajHousingLicense;
+    @SerializedName("electricitySubscription")
+    @Expose
     private String electricitySubscription;
+    @SerializedName("facilityId")
+    @Expose
     private Integer facilityId;
 
-    public CreateLocationDB() {
-    }
-
-    public CreateLocationDB(int id, String name, String streetName, String addressDescription, String buildingNo, String neighborhood, Integer postalCode, String longitude, String latitude, Integer saftyOfficeId, Integer locationCategoryId, Integer type, String constructionLicenseNo, String tourismAuthorityLicenseNo, String workingHours, String guardName, String guardMobile, Integer status, Integer recordStatus, String lastModifiedDate, String closureOrRemovalReasons, String safetyOfficerName, String safetyOfficerMobile, String buildingOperatorName, String buildingOwnerName, String civilDefenseLicenseNo, String liftsFacility, String saftyFacility, Integer contractType, String hajHousingLicense, String electricitySubscription, Integer facilityId) {
-        this.id = id;
-        this.name = name;
-        this.streetName = streetName;
-        this.addressDescription = addressDescription;
-        this.buildingNo = buildingNo;
-        this.neighborhood = neighborhood;
-        this.postalCode = postalCode;
-        this.longitude = longitude;
-        this.latitude = latitude;
-        this.saftyOfficeId = saftyOfficeId;
-        this.locationCategoryId = locationCategoryId;
-        this.type = type;
-        this.constructionLicenseNo = constructionLicenseNo;
-        this.tourismAuthorityLicenseNo = tourismAuthorityLicenseNo;
-        this.workingHours = workingHours;
-        this.guardName = guardName;
-        this.guardMobile = guardMobile;
-        this.status = status;
-        this.recordStatus = recordStatus;
-        this.lastModifiedDate = lastModifiedDate;
-        this.closureOrRemovalReasons = closureOrRemovalReasons;
-        this.safetyOfficerName = safetyOfficerName;
-        this.safetyOfficerMobile = safetyOfficerMobile;
-        this.buildingOperatorName = buildingOperatorName;
-        this.buildingOwnerName = buildingOwnerName;
-        this.civilDefenseLicenseNo = civilDefenseLicenseNo;
-        this.liftsFacility = liftsFacility;
-        this.saftyFacility = saftyFacility;
-        this.contractType = contractType;
-        this.hajHousingLicense = hajHousingLicense;
-        this.electricitySubscription = electricitySubscription;
-        this.facilityId = facilityId;
-    }
-
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -334,4 +356,5 @@ public class CreateLocationDB {
     public void setFacilityId(Integer facilityId) {
         this.facilityId = facilityId;
     }
+
 }
