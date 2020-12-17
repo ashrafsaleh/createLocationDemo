@@ -6,12 +6,18 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.createlocation.R;
 import com.example.createlocation.databinding.FragmentDetailsBinding;
+import com.example.createlocation.pojo.CreateLocationDB;
+import com.example.createlocation.pojo.CreateLocationModel;
+import com.example.createlocation.pojo.RoomDB;
+
+import java.util.List;
 
 
 public class DetailsFragment extends Fragment {
@@ -33,6 +39,13 @@ public class DetailsFragment extends Fragment {
                 Navigation.findNavController(view).navigate(R.id.action_detailsFragment_to_createLocationFragment,bundle);
             }
         });
+        binding.viewSavedLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(view).navigate(R.id.action_detailsFragment_to_savedOfflineFragment);
+            }
+        });
+
         return view;
     }
 }

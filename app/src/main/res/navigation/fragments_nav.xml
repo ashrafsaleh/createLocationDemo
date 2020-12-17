@@ -38,5 +38,12 @@
         <action
             android:id="@+id/action_detailsFragment_to_createLocationFragment"
             app:destination="@id/createLocationFragment" />
+        <action
+            android:id="@+id/action_detailsFragment_to_savedOfflineFragment"
+            app:destination="@id/savedOfflineFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/savedOfflineFragment"
+        android:name="com.example.createlocation.ui.fragments.SavedOfflineFragment"
+        android:label="savedOfflineFragment" />
 </navigation>

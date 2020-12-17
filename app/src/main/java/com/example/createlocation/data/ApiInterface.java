@@ -2,6 +2,7 @@ package com.example.createlocation.data;
 
 import com.example.createlocation.pojo.CreateLocationModel;
 import com.example.createlocation.pojo.CreateLocationResponse;
+import com.example.createlocation.pojo.EditLocationModel;
 import com.example.createlocation.pojo.FacilityModel;
 import com.example.createlocation.pojo.GetAllDropDown;
 import com.example.createlocation.pojo.LoginRequest;
@@ -30,5 +31,5 @@ public interface ApiInterface {
     @POST("api/Location")
     public Call<CreateLocationResponse> postData(@Body CreateLocationModel createLoctionModel);
     @PUT("api/Location")
-    public Call<Boolean> getRequest(@Path("id") int id,@Body CreateLocationResponse createLocationResponse);
+    public Call<Boolean> getRequest(@Body EditLocationModel editLocationModel);
 }

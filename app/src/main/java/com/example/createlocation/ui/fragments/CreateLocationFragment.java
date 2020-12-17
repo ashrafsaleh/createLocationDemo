@@ -1,5 +1,6 @@
 package com.example.createlocation.ui.fragments;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.ConnectivityManager;
@@ -11,6 +12,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +31,9 @@ import com.example.createlocation.pojo.CreateLocationModel;
 import com.example.createlocation.pojo.CreateLocationResponse;
 import com.example.createlocation.pojo.FacilityModel;
 import com.example.createlocation.pojo.GetAllDropDown;
+import com.example.createlocation.pojo.LocationCategories;
 import com.example.createlocation.pojo.RoomDB;
+import com.example.createlocation.pojo.SafteyOffices;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
@@ -50,10 +54,13 @@ public class CreateLocationFragment extends Fragment {
     ArrayList<String> locationTypes = new ArrayList<>();
     ArrayList<String> locationStatus = new ArrayList<>();
     ArrayList<String> safetyOffices = new ArrayList<>();
+    ArrayList<FacilityModel> facilityModels = new ArrayList<>();
+    ArrayList<LocationCategories> categories = new ArrayList<>();
+    ArrayList<SafteyOffices> offices = new ArrayList<>();
     ArrayList<Integer> facId = new ArrayList<>();
-    String token;
+    String token,vv;
     RoomDB roomDB;
-    int editID;
+    int editID,index;
     Bundle bundle;
 
     @Override
@@ -62,7 +69,6 @@ public class CreateLocationFragment extends Fragment {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_create_location,container,false);
         token = getArguments().getString("token");
-        Toast.makeText(getContext(), token, Toast.LENGTH_SHORT).show();
         view = binding.getRoot();
         roomDB = RoomDB.getInstance(getContext());
         binding.arrowDown.setImageResource(R.drawable.ic_baseline_expand_more_24);
@@ -190,12 +196,12 @@ public class CreateLocationFragment extends Fragment {
         return view;
     }
     public void getFacilities(){
-        Call<List<FacilityModel>> call = ApiClient.getApiInterface(token).getFacilities();
+        Call<List<FacilityModel>> call = ApiClient.getApiInterface("").getFacilities();
         call.enqueue(new Callback<List<FacilityModel>>() {
             @Override
             public void onResponse(Call<List<FacilityModel>> call, Response<List<FacilityModel>> response) {
                 for (int i =0;i<response.body().size();i++){
-
+                    facilityModels.add(response.body().get(i));
                     facilities.add(response.body().get(i).getName());
                     facId.add(response.body().get(i).getId());
                     ArrayAdapter adapter = new ArrayAdapter(getContext(), R.layout.support_simple_spinner_dropdown_item,facilities);
@@ -204,7 +210,9 @@ public class CreateLocationFragment extends Fragment {
                     binding.firstSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
                             facilityId = response.body().get(binding.firstSpinner.getSelectedItemPosition()).getId();
+                            index = binding.firstSpinner.getSelectedItemPosition();
                         }
 
                         @Override
@@ -223,7 +231,7 @@ public class CreateLocationFragment extends Fragment {
         });
     }
     public void getAllDropDown(){
-        Call <GetAllDropDown> call = ApiClient.getApiInterface(token).getDropDown();
+        Call <GetAllDropDown> call = ApiClient.getApiInterface("").getDropDown();
         call.enqueue(new Callback<GetAllDropDown>() {
             @Override
             public void onResponse(Call<GetAllDropDown> call, Response<GetAllDropDown> response) {
@@ -246,6 +254,7 @@ public class CreateLocationFragment extends Fragment {
                         });
                     }
                     for(int i = 0;i<response.body().getLocationCategories().size();i++){
+                        categories.add(response.body().getLocationCategories().get(i));
                         locationCat.add(response.body().getLocationCategories().get(i).getName());
                         ArrayAdapter catAdapter = new ArrayAdapter(getContext(), R.layout.support_simple_spinner_dropdown_item, locationCat);
                         catAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
@@ -298,6 +307,7 @@ public class CreateLocationFragment extends Fragment {
                         });
                     }
                     for(int i = 0;i<response.body().getSaftyOffices().size();i++){
+                        offices.add(response.body().getSaftyOffices().get(i));
                         safetyOffices.add(response.body().getSaftyOffices().get(i).getName());
                         ArrayAdapter safetyAdapter = new ArrayAdapter(getContext(), R.layout.support_simple_spinner_dropdown_item, safetyOffices);
                         safetyAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
@@ -306,6 +316,7 @@ public class CreateLocationFragment extends Fragment {
                             @Override
                             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                                 safId = response.body().getSaftyOffices().get(binding.safeSpinner.getSelectedItemPosition()).getId();
+
                             }
 
                             @Override
@@ -334,24 +345,25 @@ public class CreateLocationFragment extends Fragment {
                     Toast.makeText(getContext(), "Data saved successfully", Toast.LENGTH_SHORT).show();
                    editID = response.body().getResult();
                     bundle = new Bundle();
-                    bundle.putString("id", String.valueOf(editID));
+                    bundle.putString("token",token);
+                    bundle.putInt("id", editID);
                     bundle.putString("name",response.body().getLoc().getName());
                     bundle.putString("streetName",response.body().getLoc().getStreetName());
                     bundle.putString("setAddress",response.body().getLoc().getAddressDescription());
                     bundle.putString("buildingNum",response.body().getLoc().getBuildingNo());
                     bundle.putString("neighborhood",response.body().getLoc().getNeighborhood());
-                    bundle.putString("postCode",String.valueOf(response.body().getLoc().getPostalCode()));
+                    bundle.getInt("postCode",response.body().getLoc().getPostalCode());
                     bundle.putString("longitude",response.body().getLoc().getLongitude());
                     bundle.putString("latitude",response.body().getLoc().getLatitude());
-                    bundle.putString("safetyOffice",String.valueOf(safId));
-                    bundle.putString("locationCat",String.valueOf(catId));
-                    bundle.putString("type",String.valueOf(typeId));
+                    bundle.putInt("safetyOffice",safId);
+                    bundle.putInt("locationCat",catId);
+                    bundle.putInt("type",typeId);
                     bundle.putString("buildingLice",response.body().getLoc().getConstructionLicenseNo());
                     bundle.putString("touristLice",response.body().getLoc().getTourismAuthorityLicenseNo());
                     bundle.putString("duration",response.body().getLoc().getWorkingHours());
                     bundle.putString("guardName",response.body().getLoc().getGuardName());
                     bundle.putString("guardNum",response.body().getLoc().getGuardMobile());
-                    bundle.putString("status",String.valueOf(statusId));
+                    bundle.putInt("status",statusId);
                     bundle.putString("reason",response.body().getLoc().getClosureOrRemovalReasons());
                     bundle.putString("officerName",response.body().getLoc().getSafetyOfficerName());
                     bundle.putString("officerNum",response.body().getLoc().getSafetyOfficerMobile());
@@ -360,12 +372,17 @@ public class CreateLocationFragment extends Fragment {
                     bundle.putString("defenseLice",response.body().getLoc().getCivilDefenseLicenseNo());
                     bundle.putString("lifts",response.body().getLoc().getLiftsFacility());
                     bundle.putString("safetyFacility",response.body().getLoc().getSaftyFacility());
-                    bundle.putString("contractID",String.valueOf(contractId));
+                    bundle.putInt("contractID",contractId);
                     bundle.putString("hojaj",response.body().getLoc().getHajHousingLicense());
                     bundle.putString("electricity",response.body().getLoc().getElectricitySubscription());
-                    bundle.putString("facilityID",String.valueOf(facilityId));
-                    bundle.putStringArrayList("facilities",facilities);
-
+                    bundle.putInt("facilityID",facilityId);
+                    bundle.putInt("index",index);
+                    bundle.putStringArrayList("contractTypes",contractTypes);
+                    bundle.putStringArrayList("locationStatus",locationStatus);
+                    bundle.putStringArrayList("locationTypes",locationTypes);
+                    bundle.putSerializable("facilities", (ArrayList<FacilityModel>)facilityModels);
+                    bundle.putSerializable("categories", (ArrayList<LocationCategories>)categories);
+                    bundle.putSerializable("offices", (ArrayList<SafteyOffices>)offices);
                     Navigation.findNavController(view).navigate(R.id.action_createLocationFragment_to_editLocationFragment,bundle);
 
                 }
