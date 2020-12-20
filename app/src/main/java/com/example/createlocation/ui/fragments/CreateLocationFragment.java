@@ -58,7 +58,7 @@ public class CreateLocationFragment extends Fragment {
     ArrayList<LocationCategories> categories = new ArrayList<>();
     ArrayList<SafteyOffices> offices = new ArrayList<>();
     ArrayList<Integer> facId = new ArrayList<>();
-    String token,vv;
+    String token;
     RoomDB roomDB;
     int editID,index;
     Bundle bundle;

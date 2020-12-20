@@ -48,7 +48,7 @@ public class LoginFragment extends Fragment {
                  email = binding.email.getText().toString();
                  password = binding.password.getText().toString();
                 if(email.isEmpty()||password.isEmpty()){
-                    Toast.makeText(getContext(), "empty", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "You must enter invalid email and password", Toast.LENGTH_SHORT).show();
                 }
                 else
                 {
